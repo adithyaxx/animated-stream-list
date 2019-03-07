@@ -1,8 +1,8 @@
 name: animated_stream_list
 description: A new Flutter package project.
 version: 0.0.1
-author:
-homepage:
+author: Dawid Bota <dawid.bota@gmail.com>
+homepage: https://gitlab.com/otsoaUnLoco/animated-stream-list
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
