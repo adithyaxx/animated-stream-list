@@ -1,7 +1,7 @@
 name: animated_stream_list
 description: A Flutter library to easily display a list with animated changes from a Stream<List<E>>.
   It's like StreamBuilder + ListView.Builder with animations.
-version: 0.0.1
+version: 0.0.2
 author: Dawid Bota <dawid.bota@gmail.com>
 homepage: https://gitlab.com/otsoaUnLoco/animated-stream-list
 
