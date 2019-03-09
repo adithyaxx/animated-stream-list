@@ -44,15 +44,19 @@ TBD
 @required AnimatedStreamListItemBuilder<E> itemBuilder;  
 @required AnimatedStreamListItemBuilder<E> itemRemovedBuilder;  
 ```
-AnimatedStreamListItemBuilder is just a function which builds a tile
+```AnimatedStreamListItemBuilder``` is just a function which builds a tile
 ```dart
 typedef Widget AnimatedStreamListItemBuilder<T>(T item, BuildContext context, Animation<double> animation);
 ```
 ## Options 
-```Equalizer<E> equals;``` compares items for equality, by default it uses the == operator, it's critical for this to work properly.
+```dart
+Equalizer<E> equals; 
+```
+Compares items for equality, by default it uses the == operator, it's critical for this to work properly.
 ```dart
 typedef bool Equalizer<E>(E item1, E item2);
 ```
+
 You can check the [Animated List Documentation](https://docs.flutter.io/flutter/widgets/AnimatedList-class.html) for the rest:
 ```dart
 final Axis scrollDirection;  
