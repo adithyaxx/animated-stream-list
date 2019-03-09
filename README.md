@@ -52,7 +52,9 @@ typedef Widget AnimatedStreamListItemBuilder<T>(T item, BuildContext context, An
 ```dart
 Equalizer<E> equals; 
 ```
-Compares items for equality, by default it uses the == operator, it's critical for this to work properly.
+Compares items for equality, by default it uses the ```==``` operator, it's critical for this to work properly.
+
+```Equalizer``` is function, that, given two items of the same type, returns true if they are equal, false otherwise
 ```dart
 typedef bool Equalizer<E>(E item1, E item2);
 ```
