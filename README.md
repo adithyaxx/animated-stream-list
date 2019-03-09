@@ -6,6 +6,8 @@
 It's like ```StreamBuilder + ListView.Builder``` with animations.    
 Taken inspiration from the [Animated List Sample](https://flutter.dev/docs/catalog/samples/animated-list) and [Java-diff-utils](https://github.com/KengoTODA/java-diff-utils) 
 
+![](demo.gif)
+
 ```dart 
 // create tile view as the user is going to see it, attach any onClick callbacks etc. 
 Widget _createTile(String s, Animation<double> animation) {    
