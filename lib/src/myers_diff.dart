@@ -1,7 +1,6 @@
 import 'package:animated_stream_list/src/diff_payload.dart';
 import 'package:animated_stream_list/src/path_node.dart';
 import 'package:meta/meta.dart';
-import 'package:quiver/check.dart';
 
 typedef bool Equalizer<E>(E item1, E item2);
 
@@ -21,8 +20,8 @@ List<Diff> myersDiff<E>(DiffArguments<E> args) {
   final List<E> oldList = args.oldList;
   final List<E> newList = args.newList;
 
-  checkNotNull(oldList);
-  checkNotNull(newList);
+  if (oldList == null) throw ArgumentError("oldList is null");
+  if (newList == null) throw ArgumentError("newList is null");
 
   if (oldList == newList) return [];
 
@@ -98,7 +97,7 @@ PathNode _buildPath<E>(List<E> oldList, List<E> newList, Equalizer<E> equals) {
 }
 
 List<Diff> _buildPatch<E>(PathNode path, List<E> oldList, List<E> newList) {
-  checkNotNull(path);
+  if (path == null) throw ArgumentError("path is null");
 
   final List<Diff> diffs = List();
   if (path.isSnake()) {
