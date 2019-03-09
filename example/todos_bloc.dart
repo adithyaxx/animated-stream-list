@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'todo.dart';
-import 'snackbar_factory.dart';
 
 class TodoBloc {
   static const snackBarRemovedContent = "Todo removed";
   static const undoLabel = "undo";
 
-  final SnackBarFactory _snackBarFactory;
   final List<Todo> _todoList = [];
 
   final StreamController<List<Todo>> _todoListStream = StreamController();
@@ -17,7 +15,7 @@ class TodoBloc {
   final StreamController<SnackBar> _snackBarEvent = StreamController();
   Stream<SnackBar> get snackBarEvent => _snackBarEvent.stream;
 
-  TodoBloc(this._snackBarFactory) {
+  TodoBloc() {
     _todoListStream.add(_todoList);
   }
 
@@ -31,16 +29,6 @@ class TodoBloc {
     _todoList.remove(todo);
     _todoList.sort();
     _todoListStream.add(_todoList);
-    _showUndoSnackBar(todo);
-  }
-
-  void _showUndoSnackBar(Todo todo) {
-    final snackBar = _snackBarFactory.createWithAction(
-        content: snackBarRemovedContent,
-        label: undoLabel,
-        action: () => addTodo(todo));
-
-    _snackBarEvent.add(snackBar);
   }
 
   void toggleDone(Todo todo) {
