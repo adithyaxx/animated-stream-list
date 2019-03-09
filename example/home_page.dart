@@ -4,7 +4,6 @@ import 'package:animated_stream_list/animated_stream_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'todo.dart';
-import 'snackbar_factory.dart';
 import 'todos_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,16 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TodoBloc _todoBloc;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    _todoBloc = TodoBloc(SnackBarFactory());
-
-    _todoBloc.snackBarEvent.listen((snackBar) {
-      scaffoldKey.currentState.hideCurrentSnackBar();
-      scaffoldKey.currentState.showSnackBar(snackBar);
-    });
+    _todoBloc = TodoBloc();
     super.initState();
   }
 
@@ -36,7 +29,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         title: const Text("Animated Stream List example"),
       ),
@@ -75,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       itemRemovedBuilder:
           (Todo todo, BuildContext context, Animation<double> animation) =>
           _buildRemovedTile(todo, animation),
+      equals: (Todo todo1, Todo todo2) => todo1.changedAt == todo2.changedAt,
     );
   }
 
