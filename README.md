@@ -67,7 +67,7 @@ import 'package:animated_stream_list/animated_stream_list.dart';
 @required AnimatedStreamListItemBuilder<E> itemRemovedBuilder; 
 ```   
 
-`AnimatedStreamListItemBuilder` is just a function which builds a tile    
+`AnimatedStreamListItemBuilder<T>` is just a function which builds a tile    
   
 ```dart 
 typedef Widget AnimatedStreamListItemBuilder<T>(
@@ -81,15 +81,15 @@ typedef Widget AnimatedStreamListItemBuilder<T>(
 ## Options  
   
 ```dart 
-Equalizer<E> equals; 
+Equalizer equals; 
 ```   
 
-Compares items for equality, by default it uses the `==` operator, it's critical for this to work properly.    
+Compares items for equality, by default it uses the `==` operator, it's **critical** this works properly.    
     
-`Equalizer<E>` is function, that, given two items of the same type, returns true if they are equal, false otherwise  
+`Equalizer` is function, that, given two items of the same type, returns true if they are equal, false otherwise  
     
 ```dart 
-typedef bool Equalizer<E>(E item1, E item2); 
+typedef bool Equalizer(dynamic item1, dynamic item2); 
 ```    
 
  You can check the [Animated List Documentation](https://docs.flutter.io/flutter/widgets/AnimatedList-class.html) for the rest:    
