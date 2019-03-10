@@ -20,8 +20,13 @@ class _Visitor<E> implements DiffVisitor {
   @override
   void visitChangeDiff(ChangeDiff diff) {
     for (int i = 0; i < diff.size; i++) {
-      _controller.removeItemAt(diff.index + i, instant: true);
-      _controller.insert(diff.index + i, diff.items[i]);
+      _controller.removeItemAt(diff.index, instant: true);
+    }
+
+    int i = 0;
+    for (E element in diff.items) {
+      _controller.insert(diff.index + i, element);
+      i++;
     }
   }
 

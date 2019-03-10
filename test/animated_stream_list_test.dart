@@ -1,54 +1,39 @@
+import 'package:animated_stream_list/src/diff_applier.dart';
+import 'package:animated_stream_list/src/list_controller.dart';
 import 'package:animated_stream_list/src/myers_diff.dart';
+import 'package:flutter/material.dart';
+import 'package:mockito/mockito.dart';
 import 'package:quiver/collection.dart';
-import 'package:animated_stream_list/src/diff_payload.dart';
 import 'package:test/test.dart';
 
 main() {
-  test("check if diff works", () {
+  test("check if diff works", () async {
     final list1 = [1, 2, 3, 4];
     final list2 = [2, 1, 3, 6, 7, 8];
-    final diffs = myersDiff(DiffArguments(oldList: list1, newList: list2));
+    final controller = ListController<int>(
+      items: list1,
+      key: MockKey(),
+      itemRemovedBuilder: (int element, int index, BuildContext context,
+              Animation<double> animation) =>
+          null,
+    );
 
-    for (final diff in diffs) {
-      _applyDiffTo(list1, diff);
-    }
+    final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
+    DiffApplier(controller).applyDiffs(diffs);
 
-    final areEqual = listsEqual(list1, list2);
-    print(areEqual.toString());
+    final areEqual = listsEqual(controller.items, list2);
     expect(areEqual, true);
   });
 }
 
-void _applyDiffTo<T>(List<T> target, Diff diff) {
-  if (diff is InsertDiff<T>) {
-    for (int i = 0; i < diff.size; i++) {
-      target.insert(diff.index + i, diff.items[i]);
-    }
+class MockKey extends Mock implements GlobalKey<AnimatedListState> {
+  @override
+  AnimatedListState get currentState => MockList();
+}
 
-    return;
+class MockList extends Mock implements AnimatedListState {
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    return super.toString();
   }
-
-  if (diff is DeleteDiff) {
-    for (int i = 0; i < diff.size; i++) {
-      target.removeAt(diff.index);
-    }
-
-    return;
-  }
-
-  if (diff is ChangeDiff<T>) {
-    for (int i = 0; i < diff.size; i++) {
-      target.removeAt(diff.index);
-    }
-
-    int i = 0;
-    for (T element in diff.items) {
-      target.insert(diff.index + i, element);
-      i++;
-    }
-
-    return;
-  }
-
-  throw Exception();
 }

@@ -1,22 +1,28 @@
 import 'package:animated_stream_list/src/diff_payload.dart';
 import 'package:animated_stream_list/src/path_node.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
-typedef bool Equalizer<E>(E item1, E item2);
+typedef bool Equalizer(dynamic item1, dynamic item2);
 
-class DiffArguments<E> {
-  final List<E> oldList;
-  final List<E> newList;
-  final Equalizer<E> equalizer;
+class DiffUtil<E> {
+  static Equalizer eq;
 
-  DiffArguments({
-    @required this.oldList,
-    @required this.newList,
-    this.equalizer,
-  });
+  Future<List<Diff>> calculateDiff(List<E> oldList, List<E> newList,
+      {Equalizer equalizer}) {
+    eq = equalizer;
+    final args = _DiffArguments<E>(oldList, newList);
+    return compute(_myersDiff, args);
+  }
 }
 
-List<Diff> myersDiff<E>(DiffArguments<E> args) {
+class _DiffArguments<E> {
+  final List<E> oldList;
+  final List<E> newList;
+
+  _DiffArguments(this.oldList, this.newList);
+}
+
+List<Diff> _myersDiff<E>(_DiffArguments<E> args) {
   final List<E> oldList = args.oldList;
   final List<E> newList = args.newList;
 
@@ -36,13 +42,13 @@ List<Diff> myersDiff<E>(DiffArguments<E> args) {
     return [DeleteDiff(0, oldSize)];
   }
 
-  final equals = args.equalizer != null ? args.equalizer : (E a, E b) => a == b;
+  final equals = DiffUtil.eq != null ? DiffUtil.eq : (a, b) => a == b;
   final path = _buildPath(oldList, newList, equals);
   final diffs = _buildPatch(path, oldList, newList)..sort();
   return diffs.reversed.toList(growable: true);
 }
 
-PathNode _buildPath<E>(List<E> oldList, List<E> newList, Equalizer<E> equals) {
+PathNode _buildPath<E>(List<E> oldList, List<E> newList, Equalizer equals) {
   final oldSize = oldList.length;
   final newSize = newList.length;
 

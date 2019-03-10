@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       itemRemovedBuilder: (Todo todo, int index, BuildContext context,
               Animation<double> animation) =>
           _buildRemovedTile(todo, animation),
-      equals: (Todo todo1, Todo todo2) => todo1.changedAt == todo2.changedAt,
+      equals: (todo1, todo2) => todo1.changedAt == todo2.changedAt,
     );
   }
 
