@@ -46,7 +46,7 @@ final animatedView = AnimatedStreamList<String>(
 
 ```yaml
 dependencies:
-  animated_stream_list: ^0.0.2
+  animated_stream_list: ^0.0.3
 ```
 #### 2. Import it
 
