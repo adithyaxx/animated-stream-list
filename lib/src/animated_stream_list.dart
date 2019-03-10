@@ -78,7 +78,12 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
       shrinkWrap: widget.shrinkWrap,
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) =>
-              widget.itemBuilder(_listController[index], context, animation),
+              widget.itemBuilder(
+                _listController[index],
+                index,
+                context,
+                animation,
+              ),
     );
   }
 }

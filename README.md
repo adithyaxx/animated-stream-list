@@ -70,7 +70,12 @@ import 'package:animated_stream_list/animated_stream_list.dart';
 `AnimatedStreamListItemBuilder` is just a function which builds a tile    
   
 ```dart 
-typedef Widget AnimatedStreamListItemBuilder<T>(T item, BuildContext context, Animation<double> animation); 
+typedef Widget AnimatedStreamListItemBuilder<T>(
+  T item,
+  int index,
+  BuildContext context,
+  Animation<double> animation,
+); 
 ```   
 
 ## Options  

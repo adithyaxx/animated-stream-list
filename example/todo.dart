@@ -1,27 +1,29 @@
 class Todo implements Comparable<Todo> {
-  final DateTime changedAt;
-  final bool done;
   final String title;
   final String content;
+  DateTime _changedAt;
+  bool _done;
 
-  Todo({this.title, this.content, this.done}) : changedAt = DateTime.now();
+  Todo({this.title, this.content})
+      : _changedAt = DateTime.now(),
+        _done = false;
 
-  @override
-  bool operator ==(other) => other is Todo && other.changedAt == changedAt;
+  DateTime get changedAt => _changedAt;
+  bool get done => _done;
 
-  @override
-  int get hashCode => changedAt.hashCode;
-
-  Todo withDone(bool newDone) {
-    return Todo(
-      title: title,
-      content: content,
-      done: newDone,
-    );
+  set done(bool done) {
+    _done = done;
+    _changedAt = DateTime.now();
   }
 
   @override
+  bool operator ==(other) => other is Todo && other._changedAt == _changedAt;
+
+  @override
+  int get hashCode => _changedAt.hashCode;
+
+  @override
   int compareTo(Todo other) =>
-      this.changedAt.millisecondsSinceEpoch -
-      other.changedAt.millisecondsSinceEpoch;
+      this._changedAt.millisecondsSinceEpoch -
+      other._changedAt.millisecondsSinceEpoch;
 }

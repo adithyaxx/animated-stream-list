@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 typedef Widget AnimatedStreamListItemBuilder<T>(
-    T item, BuildContext context, Animation<double> animation);
+  T item,
+  int index,
+  BuildContext context,
+  Animation<double> animation,
+);
 
 class ListController<T> {
   final GlobalKey<AnimatedListState> key;
@@ -26,13 +30,14 @@ class ListController<T> {
     _list.insertItem(index, duration: duration);
   }
 
-  void removeItemAt(int index) {
+  void removeItemAt(int index, {bool instant = false}) {
     T item = items.removeAt(index);
     _list.removeItem(
-        index,
-        (BuildContext context, Animation<double> animation) =>
-            itemRemovedBuilder(item, context, animation),
-        duration: duration);
+      index,
+      (BuildContext context, Animation<double> animation) =>
+          itemRemovedBuilder(item, index, context, animation),
+      duration: !instant ? this.duration : Duration(),
+    );
   }
 
   int get length => items.length;
