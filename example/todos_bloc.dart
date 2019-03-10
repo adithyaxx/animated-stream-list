@@ -17,16 +17,14 @@ class TodoBloc {
     _todoListStream.add(_todoList);
   }
 
-  void removeTodo(Todo todo) {
-    _todoList.remove(todo);
-    _todoList.sort();
+  void removeTodo(int index) {
+    _todoList.removeAt(index);
     _todoListStream.add(_todoList);
   }
 
-  void toggleDone(Todo todo) {
-    final newTodo = todo.withDone(!todo.done);
-    final indexOf = _todoList.indexOf(todo);
-    _todoList[indexOf] = newTodo;
+  void toggleDone(int index) {
+    final todo = _todoList[index];
+    todo.done = !todo.done;
     _todoListStream.add(_todoList);
   }
 

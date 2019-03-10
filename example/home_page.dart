@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
     final todo = Todo(
       title: _randomString(10),
       content: _randomString(20),
-      done: false,
     );
 
     _todoBloc.addTodo(todo);
@@ -61,17 +60,17 @@ class _HomePageState extends State<HomePage> {
   Widget _buildStreamList(Stream<List<Todo>> todoListStream) {
     return AnimatedStreamList<Todo>(
       streamList: todoListStream,
-      itemBuilder:
-          (Todo todo, BuildContext context, Animation<double> animation) =>
-          _buildTile(todo, animation),
-      itemRemovedBuilder:
-          (Todo todo, BuildContext context, Animation<double> animation) =>
+      itemBuilder: (Todo todo, int index, BuildContext context,
+              Animation<double> animation) =>
+          _buildTile(todo, index, animation),
+      itemRemovedBuilder: (Todo todo, int index, BuildContext context,
+              Animation<double> animation) =>
           _buildRemovedTile(todo, animation),
-      equals: (Todo todo1, Todo todo2) => todo1.changedAt == todo2.changedAt,
+      equals: (todo1, todo2) => todo1.changedAt == todo2.changedAt,
     );
   }
 
-  Widget _buildTile(Todo todo, Animation<double> animation) {
+  Widget _buildTile(Todo todo, int index, Animation<double> animation) {
     TextStyle textStyle = TextStyle();
     if (todo.done) {
       textStyle = TextStyle(decoration: TextDecoration.lineThrough);
@@ -84,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         child: ListTile(
           leading: Checkbox(
             value: todo.done,
-            onChanged: (newValue) => _todoBloc.toggleDone(todo),
+            onChanged: (newValue) => _todoBloc.toggleDone(index),
           ),
           title: Text(
             todo.title,
@@ -96,7 +95,7 @@ class _HomePageState extends State<HomePage> {
           ),
           trailing: IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () => _todoBloc.removeTodo(todo),
+            onPressed: () => _todoBloc.removeTodo(index),
           ),
         ),
       ),

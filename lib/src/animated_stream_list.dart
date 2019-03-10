@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:animated_stream_list/src/list_controller.dart';
+import 'package:animated_stream_list/src/myers_diff.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'myers_diff.dart' as DiffUtil;
 import 'package:animated_stream_list/src/diff_applier.dart';
 
 class AnimatedStreamList<E> extends StatefulWidget {
@@ -17,7 +17,7 @@ class AnimatedStreamList<E> extends StatefulWidget {
   final ScrollPhysics scrollPhysics;
   final bool shrinkWrap;
   final EdgeInsetsGeometry padding;
-  final DiffUtil.Equalizer<E> equals;
+  final Equalizer equals;
 
   AnimatedStreamList({
     @required this.streamList,
@@ -41,6 +41,7 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
   final GlobalKey<AnimatedListState> _globalKey = GlobalKey();
   ListController<E> _listController;
   DiffApplier<E> _diffApplier;
+  DiffUtil<E> _diffUtil;
 
   @override
   void initState() {
@@ -52,14 +53,11 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
     );
 
     _diffApplier = DiffApplier(_listController);
+    _diffUtil = DiffUtil();
 
     widget.streamList.listen((list) async {
-      final args = DiffUtil.DiffArguments(
-        oldList: _listController.items,
-        newList: list,
-        equalizer: widget.equals,
-      );
-      final diffList = await compute(DiffUtil.myersDiff, args);
+      final diffList = await _diffUtil
+          .calculateDiff(_listController.items, list, equalizer: widget.equals);
       _diffApplier.applyDiffs(diffList);
     });
   }
@@ -78,7 +76,12 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
       shrinkWrap: widget.shrinkWrap,
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) =>
-              widget.itemBuilder(_listController[index], context, animation),
+              widget.itemBuilder(
+                _listController[index],
+                index,
+                context,
+                animation,
+              ),
     );
   }
 }

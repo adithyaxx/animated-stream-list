@@ -15,8 +15,8 @@ class TemplateBenchmark extends BenchmarkBase {
     new TemplateBenchmark().report();
   }
 
-  void run() {
-    myersDiff(DiffArguments(oldList: l1, newList: l2));
+  void run() async {
+    await DiffUtil().calculateDiff(l1, l2);
   }
 
   void setup() {
