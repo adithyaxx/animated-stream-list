@@ -7,11 +7,11 @@ typedef Widget AnimatedStreamListItemBuilder<T>(
   Animation<double> animation,
 );
 
-class ListController<T> {
+class ListController<E> {
   final GlobalKey<AnimatedListState> key;
-  final List<T> items;
+  final List<E> items;
   final Duration duration;
-  final AnimatedStreamListItemBuilder<T> itemRemovedBuilder;
+  final AnimatedStreamListItemBuilder<E> itemRemovedBuilder;
 
   ListController({
     @required this.key,
@@ -24,25 +24,36 @@ class ListController<T> {
 
   AnimatedListState get _list => key.currentState;
 
-  void insert(int index, T item) {
+  void insert(int index, E item) {
     items.insert(index, item);
 
     _list.insertItem(index, duration: duration);
   }
 
-  void removeItemAt(int index, {bool instant = false}) {
-    T item = items.removeAt(index);
+  void removeItemAt(int index) {
+    E item = items.removeAt(index);
     _list.removeItem(
       index,
       (BuildContext context, Animation<double> animation) =>
           itemRemovedBuilder(item, index, context, animation),
-      duration: !instant ? this.duration : Duration(),
+      duration: duration,
     );
+  }
+
+  void listChanged(int startIndex, List<E> itemsChanged) {
+    int i = 0;
+    for (E item in itemsChanged) {
+      items[startIndex + i] = item;
+      i++;
+    }
+
+    // ignore: invalid_use_of_protected_member
+    _list.setState(() {});
   }
 
   int get length => items.length;
 
-  T operator [](int index) => items[index];
+  E operator [](int index) => items[index];
 
-  int indexOf(T item) => items.indexOf(item);
+  int indexOf(E item) => items.indexOf(item);
 }
