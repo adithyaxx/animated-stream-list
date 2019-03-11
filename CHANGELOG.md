@@ -6,3 +6,7 @@
 
 * expose index in the item builder function
 * make deleting items instant when change is needed
+
+## [0.0.4] - 11.03.2019
+* changes are done without animations
+* write test cases

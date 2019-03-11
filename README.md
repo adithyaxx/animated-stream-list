@@ -10,31 +10,31 @@ Taken inspiration from the [Animated List Sample](https://flutter.dev/docs/catal
 
 ```dart 
 // create tile view as the user is going to see it, attach any onClick callbacks etc. 
-Widget _createTile(String s, Animation<double> animation) {    
+Widget _createTile(String item, Animation<double> animation) {    
  return SizeTransition(      
     axis: Axis.vertical,      
     sizeFactor: animation,      
-    child: const Text(s),    
+    child: const Text(item),    
   ); 
 }
 
 // what is going to be shown as the tile is being removed, usually same as above but without any 
 // onClick callbacks as, most likely, you don't want the user to interact with a removed view 
-Widget _createRemovedTile(String s, Animation<double> animation) {    
+Widget _createRemovedTile(String item, Animation<double> animation) {    
  return SizeTransition(      
     axis: Axis.vertical,      
     sizeFactor: animation,      
-    child: const Text(s),    
+    child: const Text(item),    
   ); 
 }
 
 final Stream<List<String>> list = // get list from some source, like BLOC  
 final animatedView = AnimatedStreamList<String>(      
   streamList: list,      
-  itemBuilder: (String s, BuildContext context, Animation<double> animation) =>      
-    _createTile(s, animation),      
-  itemRemovedBuilder: (String s, BuildContext context, Animation<double> animation) =>  
-    _createRemovedTile(s, animation), 
+  itemBuilder: (String item, int index, BuildContext context, Animation<double> animation) =>      
+    _createTile(item, animation),      
+  itemRemovedBuilder: (String item, int index, BuildContext context, Animation<double> animation) =>  
+    _createRemovedTile(item, animation), 
   ); 
 } 
  ```    
@@ -46,7 +46,7 @@ final animatedView = AnimatedStreamList<String>(
 
 ```yaml
 dependencies:
-  animated_stream_list: ^0.0.3
+  animated_stream_list: ^0.0.4
 ```
 #### 2. Import it
 
