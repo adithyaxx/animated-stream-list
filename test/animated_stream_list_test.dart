@@ -19,8 +19,11 @@ main() {
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
+    print (diffs.join(", "));
     DiffApplier(controller).applyDiffs(diffs);
 
+    print("list1: ${controller.items.join(", ")}");
+    print("list2: ${list2.join(", ")}");
     final areEqual = listsEqual(controller.items, list2);
     expect(areEqual, true);
   });

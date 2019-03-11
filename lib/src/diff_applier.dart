@@ -19,15 +19,22 @@ class _Visitor<E> implements DiffVisitor {
 
   @override
   void visitChangeDiff(ChangeDiff diff) {
-    for (int i = 0; i < diff.size; i++) {
-      _controller.removeItemAt(diff.index, instant: true);
+    if (diff.size > diff.items.length) {
+      int sizeDifference = diff.size - diff.items.length;
+      while (sizeDifference > 0) {
+        _controller.removeItemAt(diff.index + sizeDifference);
+        sizeDifference--;
+      }
+    } else if (diff.items.length > diff.size) {
+      int insertIndex = diff.size;
+      while (insertIndex < diff.items.length) {
+        _controller.insert(insertIndex + diff.index, diff.items[insertIndex]);
+        insertIndex++;
+      }
     }
 
-    int i = 0;
-    for (E element in diff.items) {
-      _controller.insert(diff.index + i, element);
-      i++;
-    }
+    final changedItems = diff.items.take(diff.size).toList();
+    _controller.listChanged(diff.index, changedItems);
   }
 
   @override
