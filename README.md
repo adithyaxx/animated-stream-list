@@ -81,6 +81,11 @@ typedef Widget AnimatedStreamListItemBuilder<T>(
 ```   
 
 ## Options  
+
+```dart
+List<E> initialList;
+```
+Initial list
   
 ```dart 
 Equalizer equals; 
