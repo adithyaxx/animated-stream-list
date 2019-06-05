@@ -10,3 +10,7 @@
 ## [0.0.4] - 11.03.2019
 * changes are done without animations
 * write test cases
+
+## [0.0.5] - 05.06.2019
+* allow setting initial list
+* fix memory leak

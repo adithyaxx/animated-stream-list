@@ -2,6 +2,8 @@
   
 # Animated Stream List    
 
+Looking for a maintainer, my fling with Flutter has sadly come to an end
+
 [![pub package](https://img.shields.io/pub/v/animated_stream_list.svg)](https://pub.dartlang.org/packages/animated_stream_list)
 
  A Flutter library to easily display a list with animated changes from a ```Stream<List<E>>```.    
@@ -81,6 +83,11 @@ typedef Widget AnimatedStreamListItemBuilder<T>(
 ```   
 
 ## Options  
+
+```dart
+List<E> initialList;
+```
+Initial list
   
 ```dart 
 Equalizer equals; 
