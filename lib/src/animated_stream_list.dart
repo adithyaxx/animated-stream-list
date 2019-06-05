@@ -8,6 +8,7 @@ import 'package:animated_stream_list/src/diff_applier.dart';
 
 class AnimatedStreamList<E> extends StatefulWidget {
   final Stream<List<E>> streamList;
+  final List<E> initialList;
   final AnimatedStreamListItemBuilder<E> itemBuilder;
   final AnimatedStreamListItemBuilder<E> itemRemovedBuilder;
   final Axis scrollDirection;
@@ -21,6 +22,7 @@ class AnimatedStreamList<E> extends StatefulWidget {
 
   AnimatedStreamList({
     @required this.streamList,
+    this.initialList,
     @required this.itemBuilder,
     @required this.itemRemovedBuilder,
     this.scrollDirection: Axis.vertical,
@@ -48,7 +50,7 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
     super.initState();
     _listController = ListController(
       key: _globalKey,
-      items: <E>[],
+      items: widget.initialList ?? <E>[],
       itemRemovedBuilder: widget.itemRemovedBuilder,
     );
 
