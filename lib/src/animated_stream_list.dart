@@ -39,11 +39,25 @@ class AnimatedStreamList<E> extends StatefulWidget {
   State<StatefulWidget> createState() => _AnimatedStreamListState<E>();
 }
 
-class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
+class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with WidgetsBindingObserver {
   final GlobalKey<AnimatedListState> _globalKey = GlobalKey();
   ListController<E> _listController;
   DiffApplier<E> _diffApplier;
   DiffUtil<E> _diffUtil;
+  StreamSubscription<List<E>> _subscription;
+
+  void startListening() {
+    _subscription?.cancel();
+    _subscription = widget.streamList.listen((list) async {
+      final diffList = await _diffUtil.calculateDiff(_listController.items, list, equalizer: widget.equals);
+      _diffApplier.applyDiffs(diffList);
+    });
+  }
+
+  void stopListening() {
+    _subscription?.cancel();
+    _subscription = null;
+  }
 
   @override
   void initState() {
@@ -57,11 +71,27 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> {
     _diffApplier = DiffApplier(_listController);
     _diffUtil = DiffUtil();
 
-    widget.streamList.listen((list) async {
-      final diffList = await _diffUtil
-          .calculateDiff(_listController.items, list, equalizer: widget.equals);
-      _diffApplier.applyDiffs(diffList);
-    });
+    startListening();
+  }
+
+  @override
+  void dispose() {
+    stopListening();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        startListening();
+        break;
+      case AppLifecycleState.paused:
+        stopListening();
+        break;
+      default:
+        break;
+    }
   }
 
   @override
