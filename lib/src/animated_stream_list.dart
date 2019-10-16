@@ -19,6 +19,7 @@ class AnimatedStreamList<E> extends StatefulWidget {
   final bool shrinkWrap;
   final EdgeInsetsGeometry padding;
   final Equalizer equals;
+  final Duration duration;
 
   AnimatedStreamList({
     @required this.streamList,
@@ -33,6 +34,7 @@ class AnimatedStreamList<E> extends StatefulWidget {
     this.shrinkWrap: false,
     this.padding,
     this.equals,
+    this.duration
   });
 
   @override
@@ -66,6 +68,7 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with Widg
       key: _globalKey,
       items: widget.initialList ?? <E>[],
       itemRemovedBuilder: widget.itemRemovedBuilder,
+      duration: widget.duration
     );
 
     _diffApplier = DiffApplier(_listController);
