@@ -6,7 +6,7 @@
 It's like ```StreamBuilder + ListView.Builder``` with animations.    
 Taken inspiration from the [Animated List Sample](https://flutter.dev/docs/catalog/samples/animated-list) and [Java-diff-utils](https://github.com/KengoTODA/java-diff-utils) 
 
-![](demo.gif)
+<img src="demo.gif" height="512">
  
 ## Getting Started
 
