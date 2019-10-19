@@ -1,8 +1,4 @@
-
-  
 # Animated Stream List    
-
-Looking for a maintainer, my fling with Flutter has sadly come to an end
 
 [![pub package](https://img.shields.io/pub/v/animated_stream_list.svg)](https://pub.dartlang.org/packages/animated_stream_list)
 
@@ -11,8 +7,46 @@ It's like ```StreamBuilder + ListView.Builder``` with animations.
 Taken inspiration from the [Animated List Sample](https://flutter.dev/docs/catalog/samples/animated-list) and [Java-diff-utils](https://github.com/KengoTODA/java-diff-utils) 
 
 ![](demo.gif)
+ 
+## Getting Started
 
+#### 1. Add dependency to your  `pubspec.yaml`
+
+```yaml
+dependencies:
+  animated_stream_list: ^0.0.4
+```
+#### 2. Import it
+
+```dart
+import 'package:animated_stream_list/animated_stream_list.dart';
+```
+
+#### 3. Use it. See the examples folder for an ... example.
+  
+## Parameters
+   
 ```dart 
+@required Stream<List<E>> streamList;
+@required AnimatedStreamListItemBuilder<E> itemBuilder; 
+@required AnimatedStreamListItemBuilder<E> itemRemovedBuilder; 
+Duration duration;
+```   
+
+`AnimatedStreamListItemBuilder<T>` is just a function which builds a tile    
+  
+```dart 
+typedef Widget AnimatedStreamListItemBuilder<T>(
+  T item,
+  int index,
+  BuildContext context,
+  Animation<double> animation,
+); 
+```   
+
+## Example
+
+```dart
 // create tile view as the user is going to see it, attach any onClick callbacks etc. 
 Widget _createTile(String item, Animation<double> animation) {    
  return SizeTransition(      
@@ -41,46 +75,7 @@ final animatedView = AnimatedStreamList<String>(
     _createRemovedTile(item, animation), 
   ); 
 } 
- ```    
- 
- ## Getting Started   
- 
-
-#### 1. Add dependency to your  `pubspec.yaml`
-
-```yaml
-dependencies:
-  animated_stream_list: ^0.0.4
-```
-#### 2. Import it
-
-```dart
-import 'package:animated_stream_list/animated_stream_list.dart';
-```
-
-#### 3. Use it. See the examples folder for an ... example.
-  
-## Parameters
-   
-```dart 
-@required Stream<List<E>> streamList;  
-```
-
-```dart 
-@required AnimatedStreamListItemBuilder<E> itemBuilder; 
-@required AnimatedStreamListItemBuilder<E> itemRemovedBuilder; 
-```   
-
-`AnimatedStreamListItemBuilder<T>` is just a function which builds a tile    
-  
-```dart 
-typedef Widget AnimatedStreamListItemBuilder<T>(
-  T item,
-  int index,
-  BuildContext context,
-  Animation<double> animation,
-); 
-```   
+ ```
 
 ## Options  
 
@@ -104,23 +99,14 @@ typedef bool Equalizer(dynamic item1, dynamic item2);
  You can check the [Animated List Documentation](https://docs.flutter.io/flutter/widgets/AnimatedList-class.html) for the rest:    
   
 ```dart 
-Axis scrollDirection; 
+Axis scrollDirection;
+bool reverse;
+ScrollController scrollController;
+bool primary;
+ScrollPhysics scrollPhysics;
+bool shrinkWrap;
+EdgeInsetsGeometry padding;
 ```
-```dart
-bool reverse; 
-```
-```dart
-ScrollController scrollController; 
-```
-```dart
-bool primary; 
-```
-```dart
-ScrollPhysics scrollPhysics; 
-```
-```dart
-bool shrinkWrap; 
-```
-```dart
-EdgeInsetsGeometry padding; 
-```
+
+## Credits
+This amazing package was originally created by [Dawid Bota](https://gitlab.com/otsoaUnLoco) over [here](https://gitlab.com/otsoaUnLoco/animated-stream-list). I have taken over the development with his blessing and all tracking will be done on this repo moving forward.
