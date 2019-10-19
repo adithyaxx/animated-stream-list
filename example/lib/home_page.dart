@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Animated Stream List example"),
+        title: const Text("Animated Stream List"),
       ),
       body: SafeArea(
         child: _buildStreamList(_todoBloc.todoListStream),
