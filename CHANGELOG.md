@@ -14,3 +14,8 @@
 ## [0.0.5] - 05.06.2019
 * allow setting initial list
 * fix memory leak
+
+## 1.0.0
+* Exposed duration parameter to enable customisation
+* Cleaned up dependencies
+* Added a full example

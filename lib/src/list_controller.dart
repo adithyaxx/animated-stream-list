@@ -17,7 +17,7 @@ class ListController<E> {
     @required this.key,
     @required this.items,
     @required this.itemRemovedBuilder,
-    this.duration = const Duration(milliseconds: 300),
+    @required this.duration,
   })  : assert(key != null),
         assert(itemRemovedBuilder != null),
         assert(items != null);

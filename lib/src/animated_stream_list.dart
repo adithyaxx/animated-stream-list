@@ -21,27 +21,27 @@ class AnimatedStreamList<E> extends StatefulWidget {
   final Equalizer equals;
   final Duration duration;
 
-  AnimatedStreamList({
-    @required this.streamList,
-    this.initialList,
-    @required this.itemBuilder,
-    @required this.itemRemovedBuilder,
-    this.scrollDirection: Axis.vertical,
-    this.reverse: false,
-    this.scrollController,
-    this.primary,
-    this.scrollPhysics,
-    this.shrinkWrap: false,
-    this.padding,
-    this.equals,
-    this.duration
-  });
+  AnimatedStreamList(
+      {@required this.streamList,
+      this.initialList,
+      @required this.itemBuilder,
+      @required this.itemRemovedBuilder,
+      this.scrollDirection: Axis.vertical,
+      this.reverse: false,
+      this.scrollController,
+      this.primary,
+      this.scrollPhysics,
+      this.shrinkWrap: false,
+      this.padding,
+      this.equals,
+      this.duration = const Duration(milliseconds: 300)});
 
   @override
   State<StatefulWidget> createState() => _AnimatedStreamListState<E>();
 }
 
-class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with WidgetsBindingObserver {
+class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
+    with WidgetsBindingObserver {
   final GlobalKey<AnimatedListState> _globalKey = GlobalKey();
   ListController<E> _listController;
   DiffApplier<E> _diffApplier;
@@ -51,7 +51,8 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with Widg
   void startListening() {
     _subscription?.cancel();
     _subscription = widget.streamList.listen((list) async {
-      final diffList = await _diffUtil.calculateDiff(_listController.items, list, equalizer: widget.equals);
+      final diffList = await _diffUtil
+          .calculateDiff(_listController.items, list, equalizer: widget.equals);
       _diffApplier.applyDiffs(diffList);
     });
   }
@@ -65,11 +66,10 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with Widg
   void initState() {
     super.initState();
     _listController = ListController(
-      key: _globalKey,
-      items: widget.initialList ?? <E>[],
-      itemRemovedBuilder: widget.itemRemovedBuilder,
-      duration: widget.duration
-    );
+        key: _globalKey,
+        items: widget.initialList ?? <E>[],
+        itemRemovedBuilder: widget.itemRemovedBuilder,
+        duration: widget.duration);
 
     _diffApplier = DiffApplier(_listController);
     _diffUtil = DiffUtil();
@@ -112,11 +112,11 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>> with Widg
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) =>
               widget.itemBuilder(
-                _listController[index],
-                index,
-                context,
-                animation,
-              ),
+        _listController[index],
+        index,
+        context,
+        animation,
+      ),
     );
   }
 }
