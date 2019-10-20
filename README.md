@@ -14,7 +14,7 @@ Taken inspiration from the [Animated List Sample](https://flutter.dev/docs/catal
 
 ```yaml
 dependencies:
-  animated_stream_list: ^0.0.4
+  animated_stream_list: ^1.0.0
 ```
 #### 2. Import it
 
