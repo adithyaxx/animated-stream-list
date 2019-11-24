@@ -46,15 +46,16 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
   ListController<E> _listController;
   DiffApplier<E> _diffApplier;
   DiffUtil<E> _diffUtil;
-  StreamSubscription<List<E>> _subscription;
+  StreamSubscription _subscription;
 
   void startListening() {
     _subscription?.cancel();
-    _subscription = widget.streamList.listen((list) async {
-      final diffList = await _diffUtil
-          .calculateDiff(_listController.items, list, equalizer: widget.equals);
-      _diffApplier.applyDiffs(diffList);
-    });
+    _subscription = widget.streamList
+      .asyncExpand((list) => _diffUtil
+          .calculateDiff(_listController.items, list, equalizer: widget.equals)
+          .then(_diffApplier.applyDiffs)
+          .asStream())
+      .listen((list) { });
   }
 
   void stopListening() {
