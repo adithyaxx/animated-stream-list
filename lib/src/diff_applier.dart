@@ -2,10 +2,9 @@ import 'package:animated_stream_list/src/diff_payload.dart';
 import 'package:animated_stream_list/src/list_controller.dart';
 
 class DiffApplier<E> {
-  final ListController<E> _controller;
   final DiffVisitor _visitor;
 
-  DiffApplier(this._controller) : _visitor = _Visitor(_controller);
+  DiffApplier(_controller) : _visitor = _Visitor(_controller);
 
   void applyDiffs(List<Diff> diffs) {
     diffs.forEach((diff) => diff.accept(_visitor));

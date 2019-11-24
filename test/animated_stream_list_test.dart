@@ -15,7 +15,7 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null,
+          null, duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -33,7 +33,7 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null,
+          null, duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -51,7 +51,7 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
                            Animation<double> animation) =>
-      null,
+      null, duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -69,7 +69,7 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
                            Animation<double> animation) =>
-      null,
+      null, duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -87,7 +87,7 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null,
+          null, duration: const Duration(milliseconds: 300),
     );
 
     final diffs = DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -103,7 +103,7 @@ main() {
         key: MockKey(),
         itemRemovedBuilder: (int element, int index, BuildContext context,
                              Animation<double> animation) =>
-        null,
+        null, duration: const Duration(milliseconds: 300),
       );
 
       final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -121,7 +121,7 @@ main() {
         key: MockKey(),
         itemRemovedBuilder: (int element, int index, BuildContext context,
                              Animation<double> animation) =>
-        null,
+        null, duration: const Duration(milliseconds: 300),
       );
 
       final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
