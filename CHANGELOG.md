@@ -19,3 +19,6 @@
 * Exposed duration parameter to enable customisation
 * Cleaned up dependencies
 * Added a full example
+
+## 1.1.0
+* Merged fix by @den163 for crashing caused by rapid addition/deletion of items
