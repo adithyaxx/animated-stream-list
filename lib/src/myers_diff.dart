@@ -5,12 +5,9 @@ import 'package:flutter/foundation.dart';
 typedef bool Equalizer(dynamic item1, dynamic item2);
 
 class DiffUtil<E> {
-  static Equalizer eq;
-
   Future<List<Diff>> calculateDiff(List<E> oldList, List<E> newList,
       {Equalizer equalizer}) {
-    eq = equalizer;
-    final args = _DiffArguments<E>(oldList, newList);
+    final args = _DiffArguments<E>(oldList, newList, equalizer);
     return compute(_myersDiff, args);
   }
 }
@@ -18,8 +15,9 @@ class DiffUtil<E> {
 class _DiffArguments<E> {
   final List<E> oldList;
   final List<E> newList;
+  final Equalizer eq;
 
-  _DiffArguments(this.oldList, this.newList);
+  _DiffArguments(this.oldList, this.newList, this.eq);
 }
 
 List<Diff> _myersDiff<E>(_DiffArguments<E> args) {
@@ -42,7 +40,7 @@ List<Diff> _myersDiff<E>(_DiffArguments<E> args) {
     return [DeleteDiff(0, oldSize)];
   }
 
-  final equals = DiffUtil.eq != null ? DiffUtil.eq : (a, b) => a == b;
+  final equals = args.eq != null ? args.eq : (a, b) => a == b;
   final path = _buildPath(oldList, newList, equals);
   final diffs = _buildPatch(path, oldList, newList)..sort();
   return diffs.reversed.toList(growable: true);
