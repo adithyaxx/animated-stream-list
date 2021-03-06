@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TodoBloc _todoBloc;
+  TodoBloc? _todoBloc;
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _todoBloc.dispose();
+    _todoBloc!.dispose();
     super.dispose();
   }
 
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Animated Stream List"),
       ),
       body: SafeArea(
-        child: _buildStreamList(_todoBloc.todoListStream),
+        child: _buildStreamList(_todoBloc!.todoListStream),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _handleAddTodoTapped(),
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
       content: _randomString(20),
     );
 
-    _todoBloc.addTodo(todo);
+    _todoBloc!.addTodo(todo);
   }
 
   String _randomString(int length) {
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         child: ListTile(
           leading: Checkbox(
             value: todo.done,
-            onChanged: (newValue) => _todoBloc.toggleDone(index),
+            onChanged: (newValue) => _todoBloc!.toggleDone(index),
           ),
           title: Text(
             todo.title,
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
           ),
           trailing: IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () => _todoBloc.removeTodo(index),
+            onPressed: () => _todoBloc!.removeTodo(index),
           ),
         ),
       ),
