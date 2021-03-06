@@ -22,3 +22,6 @@
 
 ## 1.1.0
 * Merged fix by @den163 for crashing caused by rapid addition/deletion of items
+
+## 1.2.0
+* Migrated to null safety
