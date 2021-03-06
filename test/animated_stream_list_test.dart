@@ -15,7 +15,8 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null, duration: const Duration(milliseconds: 300),
+          null,
+      duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -33,7 +34,8 @@ main() {
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null, duration: const Duration(milliseconds: 300),
+          null,
+      duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -50,8 +52,9 @@ main() {
       items: list1,
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
-                           Animation<double> animation) =>
-      null, duration: const Duration(milliseconds: 300),
+              Animation<double> animation) =>
+          null,
+      duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -68,8 +71,9 @@ main() {
       items: list1,
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
-                           Animation<double> animation) =>
-      null, duration: const Duration(milliseconds: 300),
+              Animation<double> animation) =>
+          null,
+      duration: const Duration(milliseconds: 300),
     );
 
     final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -81,13 +85,14 @@ main() {
 
   test("check if throws when second list is null", () async {
     final list1 = [1];
-    final list2 = null;
+    final dynamic list2 = null;
     final controller = ListController<int>(
       items: list1,
       key: MockKey(),
       itemRemovedBuilder: (int element, int index, BuildContext context,
               Animation<double> animation) =>
-          null, duration: const Duration(milliseconds: 300),
+          null,
+      duration: const Duration(milliseconds: 300),
     );
 
     final diffs = DiffUtil<int>().calculateDiff(controller.items, list2);
@@ -97,16 +102,18 @@ main() {
   group("check if handles one list being empty", () {
     test("first list empty", () async {
       final list1 = <int>[];
-      final list2 = [1,2,3];
+      final list2 = [1, 2, 3];
       final controller = ListController<int>(
         items: list1,
         key: MockKey(),
         itemRemovedBuilder: (int element, int index, BuildContext context,
-                             Animation<double> animation) =>
-        null, duration: const Duration(milliseconds: 300),
+                Animation<double> animation) =>
+            null,
+        duration: const Duration(milliseconds: 300),
       );
 
-      final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
+      final diffs =
+          await DiffUtil<int>().calculateDiff(controller.items, list2);
       DiffApplier(controller).applyDiffs(diffs);
 
       final areEqual = listsEqual(controller.items, list2);
@@ -114,17 +121,19 @@ main() {
     });
 
     test("second list empty", () async {
-      final list1 = [1,2,3];
+      final list1 = [1, 2, 3];
       final list2 = <int>[];
       final controller = ListController<int>(
         items: list1,
         key: MockKey(),
         itemRemovedBuilder: (int element, int index, BuildContext context,
-                             Animation<double> animation) =>
-        null, duration: const Duration(milliseconds: 300),
+                Animation<double> animation) =>
+            null,
+        duration: const Duration(milliseconds: 300),
       );
 
-      final diffs = await DiffUtil<int>().calculateDiff(controller.items, list2);
+      final diffs =
+          await DiffUtil<int>().calculateDiff(controller.items, list2);
       DiffApplier(controller).applyDiffs(diffs);
 
       final areEqual = listsEqual(controller.items, list2);
@@ -133,6 +142,7 @@ main() {
   });
 }
 
+// ignore: must_be_immutable
 class MockKey extends Mock implements GlobalKey<AnimatedListState> {
   @override
   AnimatedListState get currentState => MockList();
