@@ -8,8 +8,8 @@ class TemplateBenchmark extends BenchmarkBase {
 
   static const size = 1000;
 
-  List<int> l1;
-  List<int> l2;
+  List<int>? l1;
+  List<int>? l2;
 
   static void main() {
     new TemplateBenchmark().report();
@@ -21,11 +21,11 @@ class TemplateBenchmark extends BenchmarkBase {
 
   void setup() {
     l1 = List.generate(size, (i) => Random().nextInt(1000000));
-    l2 = List.from(l1);
+    l2 = List.from(l1!);
     for (int i = 0; i < 200; i++) {
       final index = Random().nextInt(size);
       final value = Random().nextInt(1000000);
-      l1[index] = value;
+      l1![index] = value;
     }
   }
 

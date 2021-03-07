@@ -1,31 +1,30 @@
 import 'dart:async';
 
+import 'package:animated_stream_list/src/diff_applier.dart';
 import 'package:animated_stream_list/src/list_controller.dart';
 import 'package:animated_stream_list/src/myers_diff.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_stream_list/src/diff_applier.dart';
 
 class AnimatedStreamList<E> extends StatefulWidget {
   final Stream<List<E>> streamList;
-  final List<E> initialList;
+  final List<E>? initialList;
   final AnimatedStreamListItemBuilder<E> itemBuilder;
   final AnimatedStreamListItemBuilder<E> itemRemovedBuilder;
   final Axis scrollDirection;
   final bool reverse;
-  final ScrollController scrollController;
-  final bool primary;
-  final ScrollPhysics scrollPhysics;
+  final ScrollController? scrollController;
+  final bool? primary;
+  final ScrollPhysics? scrollPhysics;
   final bool shrinkWrap;
-  final EdgeInsetsGeometry padding;
-  final Equalizer equals;
+  final EdgeInsetsGeometry? padding;
+  final Equalizer? equals;
   final Duration duration;
 
   AnimatedStreamList(
-      {@required this.streamList,
+      {required this.streamList,
       this.initialList,
-      @required this.itemBuilder,
-      @required this.itemRemovedBuilder,
+      required this.itemBuilder,
+      required this.itemRemovedBuilder,
       this.scrollDirection: Axis.vertical,
       this.reverse: false,
       this.scrollController,
@@ -43,19 +42,20 @@ class AnimatedStreamList<E> extends StatefulWidget {
 class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
     with WidgetsBindingObserver {
   final GlobalKey<AnimatedListState> _globalKey = GlobalKey();
-  ListController<E> _listController;
-  DiffApplier<E> _diffApplier;
-  DiffUtil<E> _diffUtil;
-  StreamSubscription _subscription;
+  ListController<E>? _listController;
+  late DiffApplier<E> _diffApplier;
+  late DiffUtil<E> _diffUtil;
+  StreamSubscription? _subscription;
 
   void startListening() {
     _subscription?.cancel();
     _subscription = widget.streamList
-      .asyncExpand((list) => _diffUtil
-          .calculateDiff(_listController.items, list, equalizer: widget.equals)
-          .then(_diffApplier.applyDiffs)
-          .asStream())
-      .listen((list) { });
+        .asyncExpand((list) => _diffUtil
+            .calculateDiff(_listController!.items, list,
+                equalizer: widget.equals)
+            .then(_diffApplier.applyDiffs)
+            .asStream())
+        .listen((list) {});
   }
 
   void stopListening() {
@@ -101,7 +101,7 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
   @override
   Widget build(BuildContext context) {
     return AnimatedList(
-      initialItemCount: _listController.items.length,
+      initialItemCount: _listController!.items.length,
       key: _globalKey,
       scrollDirection: widget.scrollDirection,
       reverse: widget.reverse,
@@ -113,11 +113,11 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) =>
               widget.itemBuilder(
-        _listController[index],
+        _listController![index],
         index,
         context,
         animation,
-      ),
+      )!,
     );
   }
 }
