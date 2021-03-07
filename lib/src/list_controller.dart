@@ -18,9 +18,7 @@ class ListController<E> {
     required this.items,
     required this.itemRemovedBuilder,
     required this.duration,
-  })  : assert(key != null),
-        assert(itemRemovedBuilder != null),
-        assert(items != null);
+  });
 
   AnimatedListState? get _list => key.currentState;
 
