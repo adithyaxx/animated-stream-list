@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:animated_stream_list/src/diff_applier.dart';
 import 'package:animated_stream_list/src/list_controller.dart';
 import 'package:animated_stream_list/src/myers_diff.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_stream_list/src/diff_applier.dart';
 
 class AnimatedStreamList<E> extends StatefulWidget {
   final Stream<List<E>> streamList;
@@ -51,11 +50,12 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
   void startListening() {
     _subscription?.cancel();
     _subscription = widget.streamList
-      .asyncExpand((list) => _diffUtil
-          .calculateDiff(_listController!.items, list, equalizer: widget.equals)
-          .then(_diffApplier.applyDiffs)
-          .asStream())
-      .listen((list) { });
+        .asyncExpand((list) => _diffUtil
+            .calculateDiff(_listController!.items, list,
+                equalizer: widget.equals)
+            .then(_diffApplier.applyDiffs)
+            .asStream())
+        .listen((list) {});
   }
 
   void stopListening() {
